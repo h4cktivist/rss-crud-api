@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { server } from './src/views';
+import { server } from './server';
 
 // @ts-ignore
 const PORT: string | undefined = dotenv.config().parsed['PORT'];
