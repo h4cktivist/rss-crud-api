@@ -1,6 +1,13 @@
 import { v4 as uuidv4 } from 'uuid';
 
-export let users: {id: string, username: string, age: number, hobbies: string[]}[] = [
+export interface userInterface {
+    id: string;
+    username: string;
+    age: number;
+    hobbies: string[];
+}
+
+export let users: userInterface[] = [
     {
         id: uuidv4(),
         username: 'Test1',

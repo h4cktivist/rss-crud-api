@@ -1,6 +1,6 @@
 import http from 'http';
 import { validate, v4 as uuidv4 } from 'uuid';
-import { users } from './users';
+import { userInterface, users } from './users';
 
 const CONTENT_TYPE: http.OutgoingHttpHeaders = { 'Content-Type': 'application/json' };
 export const sendResponse = (res: http.ServerResponse, code: number, contentType: http.OutgoingHttpHeaders, data: object | undefined): void => {
@@ -25,7 +25,7 @@ export const handleGET = (res: http.ServerResponse, url: string | undefined): vo
     } else if (url?.startsWith('/api/users')) {
         const id: string = url?.split('/').slice(-1)[0];
         if (validate(id)) {
-            const user = users.find(u => u.id === id);
+            const user: userInterface | undefined = users.find(u => u.id === id);
             if (user)
                 sendResponse(res, 200, CONTENT_TYPE, user);
             else
@@ -44,7 +44,7 @@ export const handlePOST = (req: http.IncomingMessage, res: http.ServerResponse):
         data += chunk;
     });
     req.on('end', (): void => {
-        const user = JSON.parse(data);
+        const user: userInterface = JSON.parse(data);
         if (validateBody(user)) {
             user.id = uuidv4();
             users.push(user);
@@ -61,7 +61,7 @@ export const handlePUT = (req: http.IncomingMessage, res: http.ServerResponse, u
         data += chunk;
     });
     req.on('end', (): void => {
-        const newUser = JSON.parse(data);
+        const newUser: userInterface = JSON.parse(data);
         if (validateBody(newUser)) {
             const id: string = url?.split('/').slice(-1)[0];
             if (validate(id)) {
