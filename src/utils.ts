@@ -19,7 +19,7 @@ const validateBody = (user: object): boolean => {
     );
 };
 
-export const handleGET = (res: http.ServerResponse, url: string | undefined): void => {
+export const getUsers = (res: http.ServerResponse, url: string | undefined): void => {
     if (url === '/api/users') {
         sendResponse(res, 200, CONTENT_TYPE, users);
     } else if (url?.startsWith('/api/users')) {
@@ -38,7 +38,7 @@ export const handleGET = (res: http.ServerResponse, url: string | undefined): vo
     }
 };
 
-export const handlePOST = (req: http.IncomingMessage, res: http.ServerResponse): void => {
+export const addUser = (req: http.IncomingMessage, res: http.ServerResponse): void => {
     let data: string = '';
     req.on('data', (chunk: string): void => {
         data += chunk;
@@ -55,7 +55,7 @@ export const handlePOST = (req: http.IncomingMessage, res: http.ServerResponse):
     });
 };
 
-export const handlePUT = (req: http.IncomingMessage, res: http.ServerResponse, url: string): void => {
+export const updateUser = (req: http.IncomingMessage, res: http.ServerResponse, url: string): void => {
     let data: string = '';
     req.on('data', (chunk: string): void => {
         data += chunk;
