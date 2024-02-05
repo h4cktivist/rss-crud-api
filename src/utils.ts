@@ -40,7 +40,7 @@ export const handleGET = (res: http.ServerResponse, url: string | undefined): vo
 
 export const handlePOST = (req: http.IncomingMessage, res: http.ServerResponse): void => {
     let data: string = '';
-    req.on('data', (chunk: any): void => {
+    req.on('data', (chunk: string): void => {
         data += chunk;
     });
     req.on('end', (): void => {
@@ -49,6 +49,32 @@ export const handlePOST = (req: http.IncomingMessage, res: http.ServerResponse):
             user.id = uuidv4();
             users.push(user);
             sendResponse(res, 201, CONTENT_TYPE, user);
+        } else {
+            sendResponse(res, 400, CONTENT_TYPE, { error: 'Request body does not contain required fields' });
+        }
+    });
+};
+
+export const handlePUT = (req: http.IncomingMessage, res: http.ServerResponse, url: string): void => {
+    let data: string = '';
+    req.on('data', (chunk: string): void => {
+        data += chunk;
+    });
+    req.on('end', (): void => {
+        const newUser = JSON.parse(data);
+        if (validateBody(newUser)) {
+            const id: string = url?.split('/').slice(-1)[0];
+            if (validate(id)) {
+                const userIndex: number = users.findIndex(u => u.id === id);
+                if (userIndex !== -1) {
+                    users[userIndex] = { ...users[userIndex], ...newUser, id: id };
+                    sendResponse(res, 200, CONTENT_TYPE, users[userIndex]);
+                } else {
+                    sendResponse(res, 404, CONTENT_TYPE, { error: 'User is not found' });
+                }
+            } else {
+                sendResponse(res, 400, CONTENT_TYPE, { error: 'User ID is incorrect' });
+            }
         } else {
             sendResponse(res, 400, CONTENT_TYPE, { error: 'Request body does not contain required fields' });
         }
