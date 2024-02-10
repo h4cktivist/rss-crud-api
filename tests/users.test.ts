@@ -24,7 +24,7 @@ describe('User CRUD tests', () => {
             username: 'TestUser',
             age: 18,
             hobbies: ['Test', 'Hobby']
-        }
+        };
         const res = await request(server)
             .post('/api/users')
             .send(newUser);
