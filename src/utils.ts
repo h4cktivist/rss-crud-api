@@ -19,6 +19,14 @@ const validateBody = (user: object): boolean => {
     );
 };
 
+const validateUpdateBody = (user: object): boolean => {
+    return (
+        'username' in user ||
+        'age' in user ||
+        'hobbies' in user
+    );
+};
+
 export const getUsers = (res: http.ServerResponse, url: string | undefined): void => {
     if (url === '/api/users') {
         sendResponse(res, 200, CONTENT_TYPE, users);
@@ -62,7 +70,7 @@ export const updateUser = (req: http.IncomingMessage, res: http.ServerResponse, 
     });
     req.on('end', (): void => {
         const newUser: userInterface = JSON.parse(data);
-        if (validateBody(newUser)) {
+        if (validateUpdateBody(newUser)) {
             const id: string = url?.split('/').slice(-1)[0];
             if (validate(id)) {
                 const userIndex: number = users.findIndex(u => u.id === id);

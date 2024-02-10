@@ -47,8 +47,7 @@ describe('Exceptions tests', () => {
         const invalidID = '00000a00-a0a0-000a-0a0a';
         const updatedUser = {
             username: 'UpdatedUser',
-            age: 19,
-            hobbies: ['Updated', 'Hobby']
+            age: 19
         };
         const res = await request(server)
             .put(`/api/users/${invalidID}`)
@@ -60,8 +59,7 @@ describe('Exceptions tests', () => {
         const nonID = uuidv4();
         const updatedUser = {
             username: 'UpdatedUser',
-            age: 19,
-            hobbies: ['Updated', 'Hobby']
+            age: 19
         };
         const res = await request(server)
             .put(`/api/users/${nonID}`)

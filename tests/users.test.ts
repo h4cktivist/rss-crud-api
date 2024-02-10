@@ -48,8 +48,7 @@ describe('User CRUD tests', () => {
         const userID = await getUserID();
         const updatedUser = {
             username: 'UpdatedUser',
-            age: 19,
-            hobbies: ['Updated', 'Hobby']
+            age: 19
         };
         const res = await request(server)
             .put(`/api/users/${userID}`)
@@ -59,7 +58,6 @@ describe('User CRUD tests', () => {
         expect(res.body.username).toBe('UpdatedUser');
         expect(res.body.age).toBe(19);
         expect(res.body.hobbies).toHaveLength(2);
-        expect(res.body.hobbies[0]).toBe('Updated');
     });
 
     it('delete user by id', async () => {
