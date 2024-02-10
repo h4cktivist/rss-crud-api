@@ -1,8 +1,8 @@
 import request from 'supertest';
 import { server } from '../src/server';
-import { users, userInterface } from '../src/users';
+import { users } from '../src/users';
 
-describe('Users tests', () => {
+describe('User CRUD tests', () => {
     const getUserID = async () => {
         const res = await request(server).get('/api/users');
         return  res.body[0].id;
@@ -50,7 +50,7 @@ describe('Users tests', () => {
             username: 'UpdatedUser',
             age: 19,
             hobbies: ['Updated', 'Hobby']
-        }
+        };
         const res = await request(server)
             .put(`/api/users/${userID}`)
             .send(updatedUser);
