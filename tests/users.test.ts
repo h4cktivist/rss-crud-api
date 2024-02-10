@@ -55,6 +55,7 @@ describe('User CRUD tests', () => {
             .send(updatedUser);
         expect(res.statusCode).toBe(200);
         expect(typeof res.body).toBe('object');
+        expect(res.body.id).toBe(userID);
         expect(res.body.username).toBe('UpdatedUser');
         expect(res.body.age).toBe(19);
         expect(res.body.hobbies).toHaveLength(2);
